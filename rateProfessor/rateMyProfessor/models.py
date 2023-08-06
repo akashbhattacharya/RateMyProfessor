@@ -1,18 +1,19 @@
 from django.db import models
 
+
 # Create your models here.
 class Professor(models.Model):
     name = models.CharField(max_length=32)
 
     def __str__(self):
-        return '%s' % (self.name)
+        return '%s' % self.name
 
 
 class Module(models.Model):
     name = models.CharField(max_length=32)
 
     def __str__(self):
-        return '%s' % (self.name)
+        return '%s' % self.name
 
 
 class ModuleInstance(models.Model):
