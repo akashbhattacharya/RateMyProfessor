@@ -1,0 +1,44 @@
+{%extends 'base.html'%}
+{% load static%}
+{%block title%}Home{%endblock%}
+{%block content%}
+<div id="container">
+    <div id="login" class="forms">
+        <p> Login- </p>
+        <hr>
+        <form method="post" action="/login/">
+            <label for='username'>Username- </label> <br>
+            <input id='username' type='text' name ='username'><br>
+            <label for='password'>Password-  </label> <br>
+            <input id='password' type='password' name ='password'><br>
+            <br>
+            <button type="submit">submit</button>
+        </form>
+        {%for message in messages%}
+        {% if message.tags == 'error' %}
+        <p>{{message}}</p>
+        {%endif%}
+        {%endfor%}
+    </div>
+    <div id="register" class="forms">
+        <p> Register- </p>
+        <hr>
+        <form method="post" action="/register/">
+            <label for='rusername'>Username- </label> <br>
+            <input id='rusername' type='text' name ='username'><br>
+            <label for='email'>Email- </label> <br>
+            <input id='email' type='email' name ='email'><br>
+            <label for='rpassword'>Password-  </label> <br>
+            <input id='rpassword' type='password' name ='password'><br>
+            <br>
+            <button type="submit">submit</button>
+        </form>
+        {%for message in messages%}
+        {% if message.tags == 'success' %}
+        <p>{{message}}</p>
+        {%endif%}
+        {%endfor%}
+    </div>
+</div>
+<script src="{%static 'home.js' %}"></script>
+{%endblock%}

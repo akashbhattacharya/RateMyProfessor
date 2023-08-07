@@ -26,4 +26,7 @@ urlpatterns = [
     path('view/', HandleView),
     path('list/', HandleList),
     path('average/', HandleAverage),
-    path('rate/', HandleRate)]
+    path('rate/', HandleRate),
+    path('', HandleHome),
+    path('menu', HandleMenu)]
+

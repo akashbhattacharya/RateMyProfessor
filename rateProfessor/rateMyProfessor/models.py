@@ -18,7 +18,7 @@ class Module(models.Model):
 
 class ModuleInstance(models.Model):
     module = models.ForeignKey(Module, on_delete=models.CASCADE)
-    professor = models.ManyToManyField(Professor)
+    professor = models.ForeignKey(Professor, on_delete=models.CASCADE)
     year = models.IntegerField()
     semester = models.IntegerField()
 

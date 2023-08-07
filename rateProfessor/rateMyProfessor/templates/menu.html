@@ -1,0 +1,44 @@
+{%extends 'base.html'%}
+{% load static%}
+{%block title%}Menu{%endblock%}
+{%block content%}
+<p><u>Average professor ratings-</u></p>
+<br>
+<table>
+    <tr>
+        <th> ID </th>
+        <th> Professor </th>
+        <th> Average Rating </th>
+    </tr>
+    {% for entry in view%}
+    <tr>
+        <td>{{entry.ID}}</td>
+        <td>{{entry.Name}}</td>
+        <td>{{entry.Rating}}</td>
+    </tr>
+    {% endfor %}
+</table>
+<br>
+<p><u>Module table-</u></p>
+<br>
+<table>
+    <tr>
+        <th> Module ID </th>
+        <th> Module Name </th>
+        <th> Year </th>
+        <th> Semester </th>
+        <th> Professors </th>
+    </tr>
+    {% for entry in list%}
+    <tr>
+        <td>{{entry.Module_ID}}</td>
+        <td>{{entry.Module_Name}}</td>
+        <td>{{entry.Year}}</td>
+        <td>{{entry.Semester}}</td>
+        <td>{{entry.Professors}}</td>
+    </tr>
+    {% endfor %}
+</table>
+<br>
+<p>Rate your professor!</p>
+{%endblock%}

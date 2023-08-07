@@ -1,8 +1,10 @@
 from django.shortcuts import render
+from django.shortcuts import redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.http import HttpResponse
+from django.contrib import messages
 from .models import *
 
 
@@ -15,13 +17,16 @@ def HandleRegister(request):
         pw = request.POST['password']
         user = User.objects.create_user(username=un, email=em, password=pw)
         user.save()
-        return HttpResponse("User has been registered")
+        messages.success(request, 'User successfully registered')
+        return render(request, 'home.html')
     else:
         return HttpResponse("Only POST methods allowed")
 
 
 @csrf_exempt
 def HandleLogin(request):
+    if request.method != 'POST':
+        return HttpResponse('Only POST methods allowed')
     if request.method == 'POST':
         un = request.POST['username']
         pw = request.POST['password']
@@ -30,12 +35,12 @@ def HandleLogin(request):
         if user.is_active:
             login(request, user)
             if user.is_authenticated:
-                print('Successfully logged in')
-            return HttpResponse('Successfully logged in')
+                return redirect('/menu')
         else:
             return HttpResponse('Account is disabled')
     else:
-        return HttpResponse('Invalid login details')
+        messages.error(request, 'Invalid login credentials, please try again')
+        return render(request, 'home.html')
 
 
 @csrf_exempt
@@ -44,28 +49,29 @@ def HandleLogout(request):
     return HttpResponse("Logout Successful")
 
 
-def HandleList(request):
-    if request.method != 'GET':
-        return HttpResponse("Only GET requests allowed")
+def HandleList():
+    # if request.method != 'GET':
+    # return HttpResponse("Only GET requests allowed")
 
     moduleInstances = ModuleInstance.objects.all()
     moduleList = []
     for instance in moduleInstances:
-        item = {'Module Name': instance.module.name, 'Module ID': instance.module.id, 'Year': instance.year,
+        item = {'Module_Name': instance.module.name, 'Module_ID': instance.module.id, 'Year': instance.year,
                 'Semester': instance.semester,
-                'Professors': instance.professor.all().values()
+                'Professors': instance.professor.name
                 }
         moduleList.append(item)
         moduleList.append('\n')
+    return moduleList
     # payload = {'List of Modules':moduleList}
-    httpResponse = HttpResponse(moduleList)
-    httpResponse.status_code = 200
-    return httpResponse
+    # httpResponse = HttpResponse(moduleList)
+    # httpResponse.status_code = 200
+    # return httpResponse
 
 
-def HandleView(request):
-    if request.method != 'GET':
-        return HttpResponse("Only GET methods allowed")
+def HandleView():
+    # if request.method != 'GET':
+    # return HttpResponse("Only GET requests allowed")
     professorList = []
     for p in Professor.objects.all():
         avgRating = 0
@@ -77,12 +83,12 @@ def HandleView(request):
                 count += 1
 
         if count > 0:
-            avgRating = round(avgRating / count)
-        item = {'Name': p.name, 'Rating': avgRating}
+            avgRating = round((avgRating / count), 1)
+        item = {'Name': p.name, 'Rating': avgRating, 'ID': p.id}
         professorList.append(item)
         professorList.append('\n')
-
-    return HttpResponse(professorList)
+    return professorList
+    # return HttpResponse(professorList)
 
 
 @csrf_exempt
@@ -136,4 +142,13 @@ def HandleRate(request):
         return HttpResponse("Only POST requests allowed")
 
 
+def HandleHome(request):
+    return render(request, 'home.html')
 
+
+def HandleMenu(request):
+    data = {
+        'view': HandleView(),
+        'list': HandleList()
+    }
+    return render(request, 'menu.html', data)

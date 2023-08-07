@@ -1,0 +1,61 @@
+
+body{
+    background-color: rgb(199, 199, 199);
+}
+h1{
+    background-color: rgb(40, 37, 37);
+    text-align: center;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: bold;
+    color: white;
+    height: 60px;
+    line-height: 60px;
+}
+#container{
+    display: flex;
+    padding: 50px;
+    height: 400px;
+    justify-content: space-evenly;
+}
+
+.forms{
+    padding: 50px;
+    border: 2px solid black;
+    padding-left: 70px;
+    padding-right: 70px;
+    
+}
+
+input{
+    width: 100%;
+    clear: both;
+    }
+
+label{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+p{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: bold;
+}
+
+button{
+    cursor: pointer;
+}
+
+table,th{
+  border: 2px solid black; 
+  border-collapse: collapse;
+  background-color: white;
+  
+}
+
+td, tr
+{
+    width: 120px;
+    text-align: center;
+    border: 2px solid black; 
+    border-collapse: collapse;
+
+}
