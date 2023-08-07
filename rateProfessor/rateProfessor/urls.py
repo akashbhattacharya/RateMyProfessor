@@ -17,15 +17,13 @@ from django.contrib import admin
 from django.urls import path
 from rateMyProfessor.views import *
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', HandleHome),
     path('register/', HandleRegister),
     path('login/', HandleLogin),
     path('logout/', HandleLogout),
-    path('average/', HandleAverage),
+    # path('average/', HandleAverage),
     path('rate/', HandleRate),
     path('menu', HandleMenu)
 ]
-
