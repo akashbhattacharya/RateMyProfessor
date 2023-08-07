@@ -59,3 +59,8 @@ td, tr
     border-collapse: collapse;
 
 }
+
+option{
+    height : 300px;
+    width: fit-content;
+}

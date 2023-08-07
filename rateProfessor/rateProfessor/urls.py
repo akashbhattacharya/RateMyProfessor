@@ -20,13 +20,12 @@ from rateMyProfessor.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', HandleHome),
     path('register/', HandleRegister),
     path('login/', HandleLogin),
     path('logout/', HandleLogout),
-    path('view/', HandleView),
-    path('list/', HandleList),
     path('average/', HandleAverage),
     path('rate/', HandleRate),
-    path('', HandleHome),
-    path('menu', HandleMenu)]
+    path('menu', HandleMenu)
+]
 

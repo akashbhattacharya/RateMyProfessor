@@ -15,7 +15,7 @@
             <button type="submit">submit</button>
         </form>
         {%for message in messages%}
-        {% if message.tags == 'error' %}
+        {% if message.tags == 'warning' %}
         <p>{{message}}</p>
         {%endif%}
         {%endfor%}
@@ -34,7 +34,7 @@
             <button type="submit">submit</button>
         </form>
         {%for message in messages%}
-        {% if message.tags == 'success' %}
+        {% if message.tags != 'warning' %}
         <p>{{message}}</p>
         {%endif%}
         {%endfor%}

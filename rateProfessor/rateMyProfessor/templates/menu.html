@@ -35,10 +35,31 @@
         <td>{{entry.Module_Name}}</td>
         <td>{{entry.Year}}</td>
         <td>{{entry.Semester}}</td>
-        <td>{{entry.Professors}}</td>
+        <td>{{entry.Professor}}</td>
     </tr>
     {% endfor %}
 </table>
 <br>
 <p>Rate your professor!</p>
+<div id="rating_container">
+    <form method="post" action="/rate/">
+        <label for="mid">Modules-</label>
+        <select name="mid" id="mid">
+            {% for entry in list%}
+            <option name="mid"value="{{entry.Module_ID}}">{{entry.Module_ID}}: {{entry.Module_Name}} ({{entry.Year}} / Sem {{entry.Semester}}) - {{entry.Professor}}</option>
+            {% endfor %}
+        </select>
+        <label for="rate">Rate your professor-</label>
+        <select name="rate" id="rate">
+            <option name= "rate" value="1">1</option>
+            <option name= "rate" value="2">2</option>
+            <option name= "rate" value="3">3</option>
+            <option name= "rate" value="4">4</option>
+            <option name= "rate" value="5">5</option>
+        </select>
+        <button type="submit"> submit </button>
+    </form>
+</div>
+<br>
+<button><a href="/logout/">Logout</a></button>
 {%endblock%}
