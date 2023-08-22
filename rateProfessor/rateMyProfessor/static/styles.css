@@ -16,6 +16,7 @@ h1{
     padding: 50px;
     height: 400px;
     justify-content: space-evenly;
+    font-family: sans-serif;
 }
 
 .forms{
@@ -23,7 +24,9 @@ h1{
     border: 2px solid black;
     padding-left: 70px;
     padding-right: 70px;
-    
+    font-family: sans-serif;
+    width: 170px;
+
 }
 
 input{
@@ -48,7 +51,7 @@ table,th{
   border: 2px solid black; 
   border-collapse: collapse;
   background-color: white;
-  
+  font-family: sans-serif;
 }
 
 td, tr
@@ -57,10 +60,18 @@ td, tr
     text-align: center;
     border: 2px solid black; 
     border-collapse: collapse;
-
+    font-family: sans-serif;
 }
 
 option{
     height : 300px;
     width: fit-content;
+}
+
+.num {
+width:90px;
+}
+
+.modName{
+width:225px;
 }

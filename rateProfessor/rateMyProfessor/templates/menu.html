@@ -23,18 +23,18 @@
 <br>
 <table>
     <tr>
-        <th> Module ID </th>
-        <th> Module Name </th>
-        <th> Year </th>
-        <th> Semester </th>
-        <th> Professors </th>
+        <th class="num"> Module ID </th>
+        <th class="modName"> Module Name </th>
+        <th class="num"> Year </th>
+        <th class="num"> Semester </th>
+        <th> Professor </th>
     </tr>
     {% for entry in list%}
     <tr>
-        <td>{{entry.Module_ID}}</td>
-        <td>{{entry.Module_Name}}</td>
-        <td>{{entry.Year}}</td>
-        <td>{{entry.Semester}}</td>
+        <td class="num">{{entry.Module_ID}}</td>
+        <td class="modName">{{entry.Module_Name}}</td>
+        <td class="num">{{entry.Year}}</td>
+        <td class="num">{{entry.Semester}}</td>
         <td>{{entry.Professor}}</td>
     </tr>
     {% endfor %}

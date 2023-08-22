@@ -9,7 +9,6 @@ from django.contrib.auth.decorators import login_required
 from .models import *
 
 
-# Create your views here.
 @csrf_exempt
 def HandleRegister(request):
     if request.method != 'POST':
@@ -123,6 +122,7 @@ def HandleRate(request):
 
 def HandleHome(request):
     return render(request, 'home.html')
+
 
 @login_required(login_url='http://127.0.0.1:8000/')
 def HandleMenu(request):
