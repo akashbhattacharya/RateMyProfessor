@@ -13,7 +13,7 @@
             <label for='password'>Password-  </label> <br>
             <input id='password' type='password' name ='password'><br>
             <br>
-            <button type="submit">submit</button>
+            <button type="submit">login</button>
         </form>
         {%for message in messages%}
         {% if message.tags == 'warning' %}
@@ -33,7 +33,7 @@
             <label for='rpassword'>Password-  </label> <br>
             <input id='rpassword' type='password' name ='password'><br>
             <br>
-            <button type="submit">submit</button>
+            <button type="submit">register</button>
         </form>
         {%for message in messages%}
         {% if message.tags != 'warning' %}
