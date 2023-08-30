@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Professor(models.Model):
@@ -30,8 +30,9 @@ class Ratings(models.Model):
     moduleInstance = models.ForeignKey(ModuleInstance, on_delete=models.CASCADE)
     professor = models.ForeignKey(Professor, on_delete=models.CASCADE)
     rating = models.IntegerField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
-        return '%s, %s, %s, %s, %s' % (
+        return '%s, %s, %s, %s, %s, %s' % (
             self.moduleInstance.module.name, self.professor.name, self.moduleInstance.year,
-            self.moduleInstance.semester, self.rating)
+            self.moduleInstance.semester, self.rating, self.user)

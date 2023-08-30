@@ -16,8 +16,11 @@ def HandleRegister(request):
     un = request.POST['username']
     em = request.POST['email']
     pw = request.POST['password']
-    if User.objects.filter(email=em).exists() or User.objects.filter(username=un).exists():
-        messages.error(request, 'Username or email already exists')
+    if User.objects.filter(email=em).exists():
+        messages.error(request, 'This email already exists')
+        return redirect('http://127.0.0.1:8000/')
+    if User.objects.filter(username=un).exists():
+        messages.error(request, 'This username is taken')
         return redirect('http://127.0.0.1:8000/')
     user = User.objects.create_user(username=un, email=em, password=pw)
     user.save()
@@ -107,7 +110,7 @@ def HandleAverage(request):
     else:
         return HttpResponse("Only POST requests allowed")
 
-
+@login_required(login_url='http://127.0.0.1:8000/')
 @csrf_exempt
 def HandleRate(request):
     if request.method != 'POST':
@@ -115,8 +118,13 @@ def HandleRate(request):
     mid = request.POST['mid']
     rate = request.POST['rate']
     instance = ModuleInstance.objects.get(id=int(mid))
-    Ratings.objects.create(moduleInstance=instance, professor=Professor.objects.get(id=instance.professor.id),
-                           rating=int(rate))
+    if not Ratings.objects.filter(moduleInstance=instance, user=User.objects.get(username=request.user)).exists():
+        Ratings.objects.create(moduleInstance=instance, professor=Professor.objects.get(id=instance.professor.id),
+                               rating=int(rate), user=User.objects.get(username=request.user))
+    else:
+        update = Ratings.objects.get(moduleInstance=instance, user=User.objects.get(username=request.user))
+        update.rating = rate
+        update.save()
     return redirect('/menu')
 
 
