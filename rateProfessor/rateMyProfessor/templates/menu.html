@@ -61,5 +61,22 @@
     </form>
 </div>
 <br>
+<p><u>Previous Ratings-</u></p>
+<br>
+<table>
+    <tr>
+        <th class="num"> Module ID </th>
+        <th> Professor </th>
+        <th> Previous Rating </th>
+    </tr>
+    {% for entry in previous%}
+    <tr>
+        <td class="num">{{entry.Module_ID}}</td>
+        <td>{{entry.Professor}}</td>
+        <td class>{{entry.Rating}}.0</td>
+    </tr>
+    {% endfor %}
+</table>
+<br>
 <button><a href="/logout/">Logout</a></button>
 {%endblock%}

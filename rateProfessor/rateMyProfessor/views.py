@@ -82,33 +82,16 @@ def HandleView():
         professorList.append(item)
     return professorList
 
-
-@csrf_exempt
-def HandleAverage(request):
-    if request.method == 'POST':
-        mid = request.POST['mid']
-        pid = request.POST['pid']
-        check = False
-        avgRating = 0
-        count = 0
-        for r in Ratings.objects.all():
-            try:
-                if (r.professor == Professor.objects.get(id=pid) and r.moduleInstance.module == Module.objects.get(
-                        id=mid)):
-                    check = True
-                    avgRating += int(r.rating)
-                    count += 1
-            except Module.DoesNotExist:
-                return HttpResponse('Module Not Found')
-            except Professor.DoesNotExist:
-                return HttpResponse('Professor Not Found')
-        if check is False:
-            return HttpResponse("Could not find rating")
-        else:
-            avgRating = round(avgRating / count)
-            return HttpResponse("The average rating of professor {} for module {} is {}".format(pid, mid, avgRating))
-    else:
-        return HttpResponse("Only POST requests allowed")
+def HandlePrevious(request):
+    previousRatings = []
+    ratings = Ratings.objects.filter(user=User.objects.get(username=request.user))
+    for r in ratings:
+        item = {'Module_Name': r.moduleInstance.module.name, 'Module_ID': r.moduleInstance.id, 'Year': r.moduleInstance.year,
+                'Semester': r.moduleInstance.semester,
+                'Professor': r.professor.name, 'Rating': r.rating
+                }
+        previousRatings.append(item)
+    return previousRatings
 
 @login_required(login_url='http://127.0.0.1:8000/')
 @csrf_exempt
@@ -136,6 +119,7 @@ def HandleHome(request):
 def HandleMenu(request):
     data = {
         'view': HandleView(),
-        'list': HandleList()
+        'list': HandleList(),
+        'previous': HandlePrevious(request)
     }
     return render(request, 'menu.html', data)
