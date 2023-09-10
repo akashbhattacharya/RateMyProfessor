@@ -82,3 +82,14 @@ width:90px;
 .modName{
 width:250px;
 }
+
+#registerButton{
+text-align:right;
+font-family: Georgia, 'Times New Roman', Times, serif;
+color: black;
+}
+
+#registration{
+color: black;
+font-weight: bold;
+}

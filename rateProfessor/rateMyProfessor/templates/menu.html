@@ -10,7 +10,7 @@
         <th> Professor </th>
         <th> Average Rating </th>
     </tr>
-    {% for entry in view%}
+    {% for entry in rating%}
     <tr>
         <td>{{entry.ID}}</td>
         <td>{{entry.Name}}</td>
@@ -29,7 +29,7 @@
         <th class="num"> Semester </th>
         <th> Professor </th>
     </tr>
-    {% for entry in list%}
+    {% for entry in module%}
     <tr>
         <td class="num">{{entry.Module_ID}}</td>
         <td class="modName">{{entry.Module_Name}}</td>
@@ -45,7 +45,7 @@
     <form method="post" action="/rate/">
         <label for="mid">Modules-</label>
         <select name="mid" id="mid">
-            {% for entry in list%}
+            {% for entry in module%}
             <option name="mid"value="{{entry.Module_ID}}">{{entry.Module_ID}}: {{entry.Module_Name}} ({{entry.Year}} / Sem {{entry.Semester}}) - {{entry.Professor}}</option>
             {% endfor %}
         </select>

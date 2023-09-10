@@ -1,23 +1,21 @@
 {%extends 'base.html'%}
 {% load static%}
-{%block title%}Home{%endblock%}
+{%block title%}Register{%endblock%}
 {%block content%}
 <div id="container">
-    <div id="login" class="forms">
-        <p> Login- </p>
+    <div id="register" class="forms">
+        <p> Register- </p>
         <hr>
-        <form method="post" action="/login/">
+        <form method="post" action="/register/">
             <br>
             <label for='username'>Username- </label> <br>
             <input id='username' type='text' name ='username'><br>
+            <label for='email'>Email- </label> <br>
+            <input id='email' type='email' name ='email'><br>
             <label for='password'>Password-  </label> <br>
             <input id='password' type='password' name ='password'><br>
             <br>
-            <div id="registerButton">
-                <a id="registration" href="registration/">Register</a>
-            </div>
-            <br>
-            <button type="submit">login</button>
+            <button type="submit">register</button>
         </form>
         {%for message in messages%}
         <p>{{message}}</p>

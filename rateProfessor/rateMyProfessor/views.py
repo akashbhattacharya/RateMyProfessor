@@ -9,19 +9,27 @@ from django.contrib.auth.decorators import login_required
 from .models import *
 
 
+def HandleHome(request):
+    return render(request, 'home.html')
+
+
+def HandleRegistrationPage(request):
+    return render(request, 'register.html')
+
+
 @csrf_exempt
 def HandleRegister(request):
     if request.method != 'POST':
-        return redirect('http://127.0.0.1:8000/')
+        return redirect('/registration/')
     un = request.POST['username']
     em = request.POST['email']
     pw = request.POST['password']
     if User.objects.filter(email=em).exists():
         messages.error(request, 'This email already exists')
-        return redirect('http://127.0.0.1:8000/')
+        return redirect('/registration/')
     if User.objects.filter(username=un).exists():
         messages.error(request, 'This username is taken')
-        return redirect('http://127.0.0.1:8000/')
+        return redirect('/registration/')
     user = User.objects.create_user(username=un, email=em, password=pw)
     user.save()
     messages.success(request, 'User successfully registered')
@@ -53,46 +61,6 @@ def HandleLogout(request):
     return redirect('http://127.0.0.1:8000/')
 
 
-def HandleList():
-    moduleInstances = ModuleInstance.objects.all()
-    moduleList = []
-    for instance in moduleInstances:
-        item = {'Module_Name': instance.module.name, 'Module_ID': instance.id, 'Year': instance.year,
-                'Semester': instance.semester,
-                'Professor': instance.professor.name
-                }
-        moduleList.append(item)
-    return moduleList
-
-
-def HandleView():
-    professorList = []
-    for p in Professor.objects.all():
-        avgRating = 0
-        count = 0
-
-        for r in Ratings.objects.all():
-            if p == r.professor:
-                avgRating += r.rating
-                count += 1
-
-        if count > 0:
-            avgRating = round((avgRating / count), 1)
-        item = {'Name': p.name, 'Rating': avgRating, 'ID': p.id}
-        professorList.append(item)
-    return professorList
-
-def HandlePrevious(request):
-    previousRatings = []
-    ratings = Ratings.objects.filter(user=User.objects.get(username=request.user))
-    for r in ratings:
-        item = {'Module_Name': r.moduleInstance.module.name, 'Module_ID': r.moduleInstance.id, 'Year': r.moduleInstance.year,
-                'Semester': r.moduleInstance.semester,
-                'Professor': r.professor.name, 'Rating': r.rating
-                }
-        previousRatings.append(item)
-    return previousRatings
-
 @login_required(login_url='http://127.0.0.1:8000/')
 @csrf_exempt
 def HandleRate(request):
@@ -111,15 +79,54 @@ def HandleRate(request):
     return redirect('/menu')
 
 
-def HandleHome(request):
-    return render(request, 'home.html')
-
-
 @login_required(login_url='http://127.0.0.1:8000/')
 def HandleMenu(request):
     data = {
-        'view': HandleView(),
-        'list': HandleList(),
-        'previous': HandlePrevious(request)
+        'rating': ViewRating(),
+        'module': ViewModule(),
+        'previous': ViewPrevious(request)
     }
     return render(request, 'menu.html', data)
+
+
+def ViewModule():
+    moduleInstances = ModuleInstance.objects.all()
+    moduleList = []
+    for instance in moduleInstances:
+        item = {'Module_Name': instance.module.name, 'Module_ID': instance.id, 'Year': instance.year,
+                'Semester': instance.semester,
+                'Professor': instance.professor.name
+                }
+        moduleList.append(item)
+    return moduleList
+
+
+def ViewRating():
+    professorList = []
+    for p in Professor.objects.all():
+        avgRating = 0
+        count = 0
+
+        for r in Ratings.objects.all():
+            if p == r.professor:
+                avgRating += r.rating
+                count += 1
+
+        if count > 0:
+            avgRating = round((avgRating / count), 1)
+        item = {'Name': p.name, 'Rating': avgRating, 'ID': p.id}
+        professorList.append(item)
+    return professorList
+
+
+def ViewPrevious(request):
+    previousRatings = []
+    ratings = Ratings.objects.filter(user=User.objects.get(username=request.user))
+    for r in ratings:
+        item = {'Module_Name': r.moduleInstance.module.name, 'Module_ID': r.moduleInstance.id,
+                'Year': r.moduleInstance.year,
+                'Semester': r.moduleInstance.semester,
+                'Professor': r.professor.name, 'Rating': r.rating
+                }
+        previousRatings.append(item)
+    return previousRatings
